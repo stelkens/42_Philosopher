@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 14:18:48 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/11 14:23:04 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/11 17:03:01 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	handle_mutex(pthread_mutex_t *mutex, t_mutex type)
 	else if (DESTROY == type)
 		handle_mutex_error(pthread_mutex_destroy(mutex), type);
 	else
-		error_exit("Wrong type for handle_mutex function");
+		error_exit("Called handle_mutex function with wrong type");
 }
 
 static void	handle_thread_error(int status, t_mutex type)
@@ -62,17 +62,17 @@ static void	handle_thread_error(int status, t_mutex type)
 
 /*Function calls the corresponding pthead-function and
 stops the programm if an error occurs*/
-void	handle_thread(pthread_t *thread, void *(*foo)(void *),
+void	handle_thread(pthread_t *thread_id, void *(*foo)(void *),
 			void *data, t_thread type)
 {
 	if (CREATE == type)
-		handle_thread_error(pthread_create(thread, NULL, foo, data), type);
+		handle_thread_error(pthread_create(thread_id, NULL, foo, data), type);
 	else if (JOIN == type)
-		handle_thread_error(pthread_join(*thread, NULL), type);
+		handle_thread_error(pthread_join(*thread_id, NULL), type);
 	else if (DETACH == type)
-		handle_thread_error(pthread_detach(thread), type);
+		handle_thread_error(pthread_detach(thread_id), type);
 	else
-		error_exit("Wrong type for handle_thread function");
+		error_exit("Called handle_thread function with wrong type");
 }
 
 void	*handle_malloc(size_t size)
