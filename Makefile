@@ -6,7 +6,7 @@
 #    By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/10 16:50:14 by tstelken          #+#    #+#              #
-#    Updated: 2025/12/10 17:36:06 by tstelken         ###   ########.fr        #
+#    Updated: 2025/12/11 15:22:37 by tstelken         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,10 @@
 
 NAME = philo
 SRC = $(addprefix src/, main.c\
+						handle_func.c\
 						init.c\
 						utils.c\
+						dinner.c\
 						)
 
 OBJ := $(SRC:src/%.c=build/%.o)

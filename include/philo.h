@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 14:22:58 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/10 19:00:47 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/11 15:23:18 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,23 @@ typedef struct s_table
 }			t_table;
 
 //________PROTOTYPES________
+/*dinner.c*/
+void	start_dinner(t_table *table);
+
 /*utils.c*/
 long	ft_atol(const char *nptr);
+void	set_table(t_table *table);
+
+/*handle_func.c*/
 void	handle_mutex(pthread_mutex_t *mutex, t_mutex type);
 void	handle_thread(pthread_t *thread, void *(*foo)(void *),
 			void *data, t_thread type);
+void	*handle_malloc(size_t size);
 /*init.c*/
+
 void	parse_input(t_table *table, char **av);
 /*main.c*/
+
 void	error_exit(char *error_msg);
 
 #endif
