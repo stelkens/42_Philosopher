@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 15:38:39 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/11 15:59:52 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/17 18:32:19 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ bool	get_bool(bool *src, pthread_mutex_t *mutex)
 }
 
 /*sets a long variable from the table to "value"*/
-bool	set_bool(bool value, bool *dest, pthread_mutex_t *mutex)
+void	set_bool(bool value, bool *dest, pthread_mutex_t *mutex)
 {
 	handle_mutex(mutex, LOCK);
 	*dest = value;
@@ -53,5 +53,5 @@ bool	set_bool(bool value, bool *dest, pthread_mutex_t *mutex)
 /*checks end_simulation variable from table*/
 bool	simulation_finished(t_table *table)
 {
-	return (get_bool(table->end_simulation, &table->read_table));
+	return (get_bool(&table->end_simulation, &table->read_table));
 }

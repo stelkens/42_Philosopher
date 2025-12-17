@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 14:17:12 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/11 18:07:59 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/17 19:59:23 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int	main(int argc, char **argv)
 	if (argc != 5 && argc != 6)
 		error_exit("Wrong number of arguments");
 	parse_input(&table, argv);
-	//one_philo_dinner;
 	set_table(&table);
 	start_dinner(&table);
+	//clean_function:destroy all mutex; free forks and philo
 	return (0);
 }
 //min 1.36

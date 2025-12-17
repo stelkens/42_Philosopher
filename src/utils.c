@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 16:39:49 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/11 17:52:30 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/17 19:24:03 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,44 +45,56 @@ void	wait_all_philos(t_table *table)
 {
 	while (1)
 	{
-		if (get_bool(table->philos_ready, &table->read_table))
+		if (get_bool(&table->philos_ready, &table->read_table))
 			break ;
 	}
 }
 
-/*gets the time in mil-sec or micro-sec. 1e3 = 1000*/
+/*gets the time in mil-sec or micro-sec.
+gettimeofday puts seconds (tv_sec) and miro-sec (usec) in struct.
+1e3 = 1000; 1e6 = 1000.000*/
 long	ft_gettime(t_time type)
 {
-	struct timeval	*tv;
+	struct timeval	tv;
 
-	gettimeofday(tv, NULL);
+	gettimeofday(&tv, NULL);
 	if (MILLI_SEC == type)
-		return (tv->tv_sec * 1e3 + tv->tv_usec / 1e3);
+		return ((tv.tv_sec * 1e3) + (tv.tv_usec / 1e3));
 	else if (MICRO_SEC)
-		return (tv->tv_sec * 1e6 + tv->tv_usec);
+		return ((tv.tv_sec * 1e6) + (tv.tv_usec));
 	else
 		error_exit("Called ft_gettime with wrong type");
 	return (1312);
 }
 
-void	better_usleep(long usec, t_table *table)
+void	better_usleep(long msec, t_table *table)
 {
 	long	start;
 	long	tm_past;
 	long	remaining;
 
 	start = ft_gettime(MILLI_SEC);
-	while (ft_gettime(MILLI_SEC) - start < usec && !simulation_finished(table))
+	while (ft_gettime(MILLI_SEC) - start < msec && !simulation_finished(table))
 	{
 		tm_past = ft_gettime(MILLI_SEC) - start;
-		remaining = usec - tm_past;
-		if (ft_gettime(MILLI_SEC) - start < remaining && remaining > 1e3)
-			uspleep(remaining / 2);
+		remaining = msec - tm_past;
+		if (ft_gettime(MILLI_SEC) - start < remaining && remaining > 1000)
+			usleep(remaining / 2);
 		else
 		{
 			while (1)
-				if (ft_gettime(MILLI_SEC) - start == usec)
+				if (ft_gettime(MILLI_SEC) - start == msec)
 					return ;
 		}
 	}
+}
+
+void	safe_print(t_philo *philo, char *msg, int fork_id)
+{
+	if (simulation_finished(philo->table) || philo->full)
+		return ;
+	handle_mutex(&philo->table->print_mutex, LOCK);
+	printf("%ld\t%d\t%s [fork id %d]\n",
+		ft_gettime(MILLI_SEC) - philo->table->start_time, philo->id, msg, fork_id);
+	handle_mutex(&philo->table->print_mutex, UNLOCK);
 }

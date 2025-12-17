@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 16:32:20 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/11 18:04:24 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/17 18:39:37 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	invalid_input(char **av)
 		if (input < 0)
 			error_exit("Input has to be positiv");
 		if (input > INT_MAX)
-			error_exit("Iput has to be smaller than INT_MAX");
+			error_exit("Input has to be smaller than INT_MAX");
 		++i;
 	}
 }
@@ -71,7 +71,7 @@ static void	set_fork(t_philo *philo, t_fork *forks, int i)
 	if (i == 0)
 	{
 		j = -1;
-		while (j < num_philo)
+		while (++j < num_philo)
 		{
 			handle_mutex(&forks[j].fork, INIT);
 			forks[j].fork_id = j;
@@ -96,7 +96,7 @@ void	set_table(t_table *table)
 	table->forks = handle_malloc(table->num_philos * sizeof(t_fork));
 	table->philos_ready = false;
 	handle_mutex(&table->read_table, INIT);
-	handle_mutex(&table->write_mutex, INIT);
+	handle_mutex(&table->print_mutex, INIT);
 	while (++i < table->num_philos)
 	{
 		philo = &table->philo[i];
