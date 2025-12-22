@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 16:32:20 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/17 18:39:37 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/22 10:58:43 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	set_table(t_table *table)
 	table->philo = handle_malloc(table->num_philos * sizeof(t_philo));
 	table->forks = handle_malloc(table->num_philos * sizeof(t_fork));
 	table->philos_ready = false;
+	table->running_threads = 0;
 	handle_mutex(&table->read_table, INIT);
 	handle_mutex(&table->print_mutex, INIT);
 	while (++i < table->num_philos)

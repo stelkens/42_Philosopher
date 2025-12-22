@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 14:22:58 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/17 19:38:21 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/22 11:04:43 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,10 @@ typedef struct s_table
 	long			dead_philo;
 	long			start_time;
 	long			all_full;
+	long			running_threads;
 	bool			end_simulation;
 	bool			philos_ready;
+	pthread_t		monitor;
 	pthread_mutex_t	read_table;
 	pthread_mutex_t	print_mutex;
 	t_philo			*philo;
@@ -115,6 +117,9 @@ void	parse_input(t_table *table, char **av);
 
 /*main.c*/
 void	error_exit(char *error_msg);
+
+/*monitor.c*/
+void	*monitor_sim(void * data);
 
 /*philo_action.c*/
 void	eat(t_philo *philo, t_table *tabel);
