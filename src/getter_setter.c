@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 15:38:39 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/17 18:32:19 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/23 10:53:34 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ void	set_bool(bool value, bool *dest, pthread_mutex_t *mutex)
 	handle_mutex(mutex, UNLOCK);
 }
 
-/*checks end_simulation variable from table*/
-bool	simulation_finished(t_table *table)
+void	increment_loog(long *dest, pthread_mutex_t *mutex)
 {
-	return (get_bool(&table->end_simulation, &table->read_table));
+	handle_mutex(mutex, LOCK);
+	(*dest) += 1;
+	handle_mutex(mutex, UNLOCK);
 }

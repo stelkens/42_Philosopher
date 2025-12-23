@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 17:44:59 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/17 19:45:46 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/23 11:36:35 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ void	eat(t_philo *philo, t_table *table)
 	philo->meals_eaten += 1;
 	better_usleep(table->to_eat - (ft_gettime(MILLI_SEC) - start_eat), table);
 	if (table->limit_meals > 0 && philo->meals_eaten >= table->limit_meals)
+	{
 		set_bool(true, &philo->full, &philo->philo_mutex);
+		increment_loog(table->all_full, &table->read_table);
+	}
 	handle_mutex(&philo->left_fork->fork, UNLOCK);
 	handle_mutex(&philo->right_fork->fork, UNLOCK);
 }
@@ -41,12 +44,12 @@ void	sleeping(t_philo *philo, t_table *table)
 	better_usleep(table->to_sleep, table);
 }
 
-void	think(t_philo *philo, long usec)
+void	think(t_philo *philo, long mill_sec)
 {
 	if (simulation_finished(philo->table))
 		return ;
 	safe_print(philo, "is thinking", -1);
-	better_usleep(usec, philo->table);
+	better_usleep(mill_sec, philo->table);
 }
 
 //void	die(t_philo *philo, )

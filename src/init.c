@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 16:32:20 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/22 10:58:43 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/23 11:05:25 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ and add it to the struct.*/
 void	parse_input(t_table *table, char **av)
 {
 	invalid_input(av);
+	memset(table, 0, sizeof(t_table));
 	table->num_philos = ft_atol(av[1]);
 	table->to_die = ft_atol(av[2]);
 	table->to_eat = ft_atol(av[3]);
@@ -90,20 +91,21 @@ void	set_table(t_table *table)
 	t_philo	*philo;
 
 	i = -1;
-	table->dead_philo = 0;
-	table->end_simulation = false;
+	// table->dead_philo = 0;
+	// table->end_simulation = false;
 	table->philo = handle_malloc(table->num_philos * sizeof(t_philo));
 	table->forks = handle_malloc(table->num_philos * sizeof(t_fork));
-	table->philos_ready = false;
-	table->running_threads = 0;
+	// table->philos_ready = false;
+	// table->running_threads = 0;
+	// table->all_full = 0;
 	handle_mutex(&table->read_table, INIT);
 	handle_mutex(&table->print_mutex, INIT);
 	while (++i < table->num_philos)
 	{
 		philo = &table->philo[i];
 		philo->id = i + 1;
-		philo->full = false;
 		philo->meals_eaten = 0;
+		philo->full = false;
 		philo->table = table;
 		handle_mutex(&philo->philo_mutex, INIT);
 		set_fork(philo, table->forks, i);

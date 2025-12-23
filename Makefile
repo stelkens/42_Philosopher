@@ -6,7 +6,7 @@
 #    By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/10 16:50:14 by tstelken          #+#    #+#              #
-#    Updated: 2025/12/22 11:03:15 by tstelken         ###   ########.fr        #
+#    Updated: 2025/12/23 10:47:48 by tstelken         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRC = $(addprefix src/, main.c\
 						getter_setter.c\
 						philo_actions.c\
 						monitor.c\
+						more_utils.c\
 						)
 
 OBJ := $(SRC:src/%.c=build/%.o)

@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 16:39:49 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/17 19:24:03 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/23 10:46:56 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ long	ft_gettime(t_time type)
 	return (1312);
 }
 
+/*more precised usleep function*/
 void	better_usleep(long msec, t_table *table)
 {
 	long	start;

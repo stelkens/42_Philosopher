@@ -6,11 +6,37 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 15:21:21 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/22 11:03:36 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/23 11:34:02 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	*dinner_simulation(void *data);
+
+void	start_dinner(t_table *table)
+{
+	int		i;
+	t_philo	*philo;
+
+	i = -1;
+	while (++i < table->num_philos)
+	{
+		philo = &table->philo[i];
+		handle_thread(&philo->thread_id, dinner_simulation, philo, CREATE);
+	}
+	handle_thread(&table->monitor, monitor_sim, (void *)table, CREATE);
+	table->start_time = ft_gettime(MILLI_SEC);
+	set_bool(true, &table->philos_ready, &table->read_table);
+	i = -1;
+	while (++i < table->num_philos)
+	{
+		philo = &table->philo[i];
+		handle_thread(&philo->thread_id, NULL, NULL, JOIN);
+	}
+	//set_bool(true, &table->end_simulation, &table->read_table); brauch ich das?
+	handle_thread(&table->monitor, NULL, NULL, JOIN);
+}
 
 static void	dinner_for_one(t_philo *philo)
 {
@@ -26,9 +52,7 @@ void	*dinner_simulation(void *data)
 	philo = (t_philo *)data;
 	wait_all_philos(philo->table);
 	set_long(ft_gettime(MILLI_SEC), &philo->last_meal, &philo->philo_mutex);
-	handle_mutex(&philo->table->read_table, LOCK);
-	philo->table->running_threads += 1;
-	handle_mutex(&philo->table->read_table, UNLOCK);
+	increment_loog(philo->table->running_threads, &philo->table->read_table);
 	if (philo->table->num_philos == 1)
 		dinner_for_one(philo);
 	if (philo->id % 2 < 1 & !simulation_finished(philo->table))
@@ -44,29 +68,4 @@ void	*dinner_simulation(void *data)
 	return (NULL);
 }
 
-void	start_dinner(t_table *table)
-{
-	int		i;
-	t_philo	*philo;
 
-	i = -1;
-	while (++i < table->num_philos)
-	{
-		philo = &table->philo[i];
-		handle_thread(&philo->thread_id, dinner_simulation, philo, CREATE);
-	}
-	handle_thread(&philo->table->monitor, monitor_sim, (void *)philo->table, CREATE);
-	table->start_time = ft_gettime(MILLI_SEC);
-	set_bool(true, &table->philos_ready, &table->read_table);
-	i = -1;
-	while (++i < table->num_philos)
-	{
-		philo = &table->philo[i];
-		handle_thread(&philo->thread_id, NULL, NULL, JOIN);
-	}
-	set_bool(true, &table->end_simulation, &table->read_table);
-	//thread join monitor
-	
-	//clean_up > unlock all locks (halgrind check)
-	//lock in the print fuction
-}

@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 14:22:58 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/22 11:04:43 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/23 11:36:47 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <limits.h>
 # include <stdbool.h>
 # include <errno.h>
+# include <string.h>
 
 typedef struct s_table	t_table;
 
@@ -57,11 +58,11 @@ typedef struct s_philo
 	long			last_meal;
 	long			meals_eaten;
 	bool			full;
+	t_table			*table;
+	pthread_mutex_t	philo_mutex;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
 	pthread_t		thread_id;
-	pthread_mutex_t	philo_mutex;
-	t_table			*table;
 }					t_philo;
 
 /*philos_ready is a bool that turns to true, when all
@@ -96,7 +97,7 @@ long	get_long(long *src, pthread_mutex_t *mutex);
 void	set_long(long value, long *dest, pthread_mutex_t *mutex);
 bool	get_bool(bool *src, pthread_mutex_t *mutex);
 void	set_bool(bool value, bool *dest, pthread_mutex_t *mutex);
-bool	simulation_finished(t_table *table);
+void	increment_loog(long *dest, pthread_mutex_t *mutex);
 
 /*utils.c*/
 long	ft_atol(const char *nptr);
@@ -121,9 +122,12 @@ void	error_exit(char *error_msg);
 /*monitor.c*/
 void	*monitor_sim(void * data);
 
+/*more_utils.c*/
+bool	simulation_finished(t_table *table);
+
 /*philo_action.c*/
 void	eat(t_philo *philo, t_table *tabel);
 void	sleeping(t_philo *philo, t_table *tabel);
-void	think(t_philo *philo, long usec);
+void	think(t_philo *philo, long mill_sec);
 
 #endif
