@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 16:39:49 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/23 10:46:56 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/24 14:27:05 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	wait_all_philos(t_table *table)
 {
 	while (1)
 	{
-		if (get_bool(&table->philos_ready, &table->read_table))
+		if (get_bool(&table->philos_ready, &table->read_table, table))
 			break ;
 	}
 }
@@ -62,9 +62,6 @@ long	ft_gettime(t_time type)
 		return ((tv.tv_sec * 1e3) + (tv.tv_usec / 1e3));
 	else if (MICRO_SEC)
 		return ((tv.tv_sec * 1e6) + (tv.tv_usec));
-	else
-		error_exit("Called ft_gettime with wrong type");
-	return (1312);
 }
 
 /*more precised usleep function*/
@@ -94,8 +91,8 @@ void	safe_print(t_philo *philo, char *msg, int fork_id)
 {
 	if (simulation_finished(philo->table) || philo->full)
 		return ;
-	handle_mutex(&philo->table->print_mutex, LOCK);
+	handle_mutex(&philo->table->print_mutex, LOCK, philo->table);
 	printf("%ld\t%d\t%s [fork id %d]\n",
 		ft_gettime(MILLI_SEC) - philo->table->start_time, philo->id, msg, fork_id);
-	handle_mutex(&philo->table->print_mutex, UNLOCK);
+	handle_mutex(&philo->table->print_mutex, UNLOCK, philo->table);
 }

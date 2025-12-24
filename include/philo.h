@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 14:22:58 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/23 11:36:47 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/24 14:24:40 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_table
 	long			running_threads;
 	bool			end_simulation;
 	bool			philos_ready;
+	int				error;
 	pthread_t		monitor;
 	pthread_mutex_t	read_table;
 	pthread_mutex_t	print_mutex;
@@ -93,11 +94,11 @@ void	start_dinner(t_table *table);
 void	*dinner_simulation(void *data);
 
 /*getter_setter.c*/
-long	get_long(long *src, pthread_mutex_t *mutex);
-void	set_long(long value, long *dest, pthread_mutex_t *mutex);
-bool	get_bool(bool *src, pthread_mutex_t *mutex);
-void	set_bool(bool value, bool *dest, pthread_mutex_t *mutex);
-void	increment_loog(long *dest, pthread_mutex_t *mutex);
+long	get_long(long *src, pthread_mutex_t *mutex, t_table *table);
+void	set_long(long value, long *dest, pthread_mutex_t *mutex, t_table *table);
+bool	get_bool(bool *src, pthread_mutex_t *mutex, t_table *table);
+void	set_bool(bool value, bool *dest, pthread_mutex_t *mutex, t_table *table);
+void	increment_loog(long *dest, pthread_mutex_t *mutex, t_table *table);
 
 /*utils.c*/
 long	ft_atol(const char *nptr);
@@ -108,16 +109,16 @@ void	better_usleep(long usec, t_table *table);
 void	safe_print(t_philo *philo, char *msg, int fork_id);
 
 /*handle_func.c*/
-void	handle_mutex(pthread_mutex_t *mutex, t_mutex type);
+void	handle_mutex(pthread_mutex_t *mutex, t_mutex type, t_table *table);
 void	handle_thread(pthread_t *thread_id, void *(*foo)(void *),
 			void *data, t_thread type);
-void	*handle_malloc(size_t size);
+void	*handle_malloc(size_t size, t_table *table);
 
 /*init.c*/
 void	parse_input(t_table *table, char **av);
 
 /*main.c*/
-void	error_exit(char *error_msg);
+void	error_exit(char *error_msg, t_table *table);
 
 /*monitor.c*/
 void	*monitor_sim(void * data);

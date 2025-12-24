@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 16:32:20 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/23 11:05:25 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/24 13:21:45 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ static void	invalid_input(char **av)
 		while (av[i][j] && av[i][j] <= '9' && av[i][j] >= '0')
 			++j;
 		if (av[i][j])
-			error_exit("Input has to be a number");
+			error_exit("Input has to be a number", NULL);
 		if (input < 0)
-			error_exit("Input has to be positiv");
+			error_exit("Input has to be positiv", NULL);
 		if (input > INT_MAX)
-			error_exit("Input has to be smaller than INT_MAX");
+			error_exit("Input has to be smaller than INT_MAX", NULL);
 		++i;
 	}
 }
@@ -74,7 +74,7 @@ static void	set_fork(t_philo *philo, t_fork *forks, int i)
 		j = -1;
 		while (++j < num_philo)
 		{
-			handle_mutex(&forks[j].fork, INIT);
+			handle_mutex(&forks[j].fork, INIT, philo->table);
 			forks[j].fork_id = j;
 		}
 	}
@@ -93,13 +93,13 @@ void	set_table(t_table *table)
 	i = -1;
 	// table->dead_philo = 0;
 	// table->end_simulation = false;
-	table->philo = handle_malloc(table->num_philos * sizeof(t_philo));
-	table->forks = handle_malloc(table->num_philos * sizeof(t_fork));
+	table->philo = handle_malloc(table->num_philos * sizeof(t_philo), table);
+	table->forks = handle_malloc(table->num_philos * sizeof(t_fork), table);
 	// table->philos_ready = false;
 	// table->running_threads = 0;
 	// table->all_full = 0;
-	handle_mutex(&table->read_table, INIT);
-	handle_mutex(&table->print_mutex, INIT);
+	handle_mutex(&table->read_table, INIT, table);
+	handle_mutex(&table->print_mutex, INIT, table);
 	while (++i < table->num_philos)
 	{
 		philo = &table->philo[i];
@@ -107,7 +107,7 @@ void	set_table(t_table *table)
 		philo->meals_eaten = 0;
 		philo->full = false;
 		philo->table = table;
-		handle_mutex(&philo->philo_mutex, INIT);
+		handle_mutex(&philo->philo_mutex, INIT, table);
 		set_fork(philo, table->forks, i);
 	}
 }

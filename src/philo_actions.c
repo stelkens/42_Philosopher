@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 17:44:59 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/23 11:36:35 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/24 14:32:44 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,22 @@ void	eat(t_philo *philo, t_table *table)
 
 	if (philo->full || simulation_finished(table))
 		return ;
-	handle_mutex(&philo->right_fork->fork, LOCK);
+	handle_mutex(&philo->right_fork->fork, LOCK, table);
 	safe_print(philo, "has taken a fork", philo->right_fork->fork_id);
-	handle_mutex(&philo->left_fork->fork, LOCK);
+	handle_mutex(&philo->left_fork->fork, LOCK, table);
 	safe_print(philo, "has taken a fork", philo->left_fork->fork_id);
 	start_eat = ft_gettime(MILLI_SEC);
 	safe_print(philo, "is eating", -1);
-	set_long(start_eat, &philo->last_meal, &philo->philo_mutex);
+	set_long(start_eat, &philo->last_meal, &philo->philo_mutex, table);
 	philo->meals_eaten += 1;
 	better_usleep(table->to_eat - (ft_gettime(MILLI_SEC) - start_eat), table);
 	if (table->limit_meals > 0 && philo->meals_eaten >= table->limit_meals)
 	{
-		set_bool(true, &philo->full, &philo->philo_mutex);
-		increment_loog(table->all_full, &table->read_table);
+		set_bool(true, &philo->full, &philo->philo_mutex, table);
+		increment_loog(&table->all_full, &table->read_table, table);
 	}
-	handle_mutex(&philo->left_fork->fork, UNLOCK);
-	handle_mutex(&philo->right_fork->fork, UNLOCK);
+	handle_mutex(&philo->left_fork->fork, UNLOCK, table);
+	handle_mutex(&philo->right_fork->fork, UNLOCK, table);
 }
 
 void	sleeping(t_philo *philo, t_table *table)
@@ -52,4 +52,3 @@ void	think(t_philo *philo, long mill_sec)
 	better_usleep(mill_sec, philo->table);
 }
 
-//void	die(t_philo *philo, )
