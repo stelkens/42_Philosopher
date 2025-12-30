@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 17:44:59 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/30 19:24:02 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/30 19:42:35 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,6 @@ void	eat(t_philo *philo, t_table *table)
 	if (philo->full || simulation_finished(table))
 		return ;
 	handle_mutex(&philo->right_fork->fork_mx, LOCK, table);
-	if (simulation_finished(table))
-	{
-		handle_mutex(&philo->right_fork->fork_mx, UNLOCK, table);
-		return ;
-	}
 	safe_print(philo, "has taken a fork");
 	handle_mutex(&philo->left_fork->fork_mx, LOCK, table);
 	safe_print(philo, "has taken a fork");
