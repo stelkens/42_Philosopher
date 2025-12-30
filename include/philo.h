@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 14:22:58 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/30 13:44:56 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/30 19:22:30 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_philo
 	long			last_meal;
 	long			meals_eaten;
 	bool			full;
+	bool			eating;
 	t_table			*table;
 	pthread_mutex_t	philo_mx;
 	t_fork			*left_fork;

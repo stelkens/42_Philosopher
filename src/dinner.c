@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 15:21:21 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/30 13:46:31 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/30 18:33:11 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,3 @@ void	*dinner_simulation(void *data)
 	}
 	return (NULL);
 }
-
-

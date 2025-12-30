@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 16:39:49 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/30 13:42:43 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/30 19:12:07 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,12 @@ void	better_usleep(long msec, t_table *table)
 	{
 		tm_past = ft_gettime(MILLI_SEC) - start;
 		remaining = msec - tm_past;
-		if (ft_gettime(MILLI_SEC) - start < remaining && remaining > 1000)
+		if (ft_gettime(MILLI_SEC) - start < remaining && remaining > 1000
+			&& !simulation_finished(table))
 			usleep(remaining / 2);
 		else
 		{
-			while (1)
+			while (1 && !simulation_finished(table))
 				if (ft_gettime(MILLI_SEC) - start == msec)
 					return ;
 		}
@@ -92,6 +93,11 @@ void	safe_print(t_philo *philo, char *msg)
 	if (simulation_finished(philo->table) || philo->full)
 		return ;
 	handle_mutex(&philo->table->print_mutex, LOCK, philo->table);
+	if (simulation_finished(philo->table) || philo->full)
+	{
+		handle_mutex(&philo->table->print_mutex, UNLOCK, philo->table);
+		return ;
+	}
 	printf("%ld\t%d\t%s\n",
 		ft_gettime(MILLI_SEC) - philo->table->start_time, philo->id, msg);
 	handle_mutex(&philo->table->print_mutex, UNLOCK, philo->table);

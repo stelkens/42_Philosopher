@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 14:17:12 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/30 13:47:08 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/30 19:13:23 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,6 @@ int	main(int argc, char **argv)
 	clean_up(&table);
 	return (0);
 }
-//min 2.07 think verbessern?
+/*bugs
+- manchmal startet philo zu essen und stirbt in der selben usec
+- */

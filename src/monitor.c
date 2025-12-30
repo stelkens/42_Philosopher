@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 11:01:18 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/30 13:52:36 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/30 19:36:45 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,21 @@ static bool	philo_died(t_philo *philo)
 	if (get_bool(&philo->full, &philo->philo_mx, philo->table))
 		return (false);
 	to_die = philo->table->to_die;
-	no_food = ft_gettime(MILLI_SEC) - get_long(&philo->last_meal,
-			&philo->philo_mx, philo->table);
-	if (no_food > to_die)
+	handle_mutex(&philo->philo_mx, LOCK, philo->table);
+	no_food = ft_gettime(MILLI_SEC) - philo->last_meal;
+	if (no_food > to_die && !philo->eating)
 	{
-		safe_print(philo, "died");
+		handle_mutex(&philo->table->print_mutex, LOCK, philo->table);
+		printf("%ld\t%d\t%s\n", ft_gettime(MILLI_SEC) - philo->table->start_time,
+			philo->id, "died");
+		set_bool(true, &philo->table->end_sim,
+			&philo->table->table_mx, philo->table);
+		usleep(10);
+		handle_mutex(&philo->table->print_mutex, UNLOCK, philo->table);
+		handle_mutex(&philo->philo_mx, UNLOCK, philo->table);
 		return (true);
 	}
+	handle_mutex(&philo->philo_mx, UNLOCK, philo->table);
 	return (false);
 }
 
