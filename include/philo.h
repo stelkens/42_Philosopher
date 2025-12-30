@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 14:22:58 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/30 13:10:16 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/30 13:35:21 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,10 +121,11 @@ void	parse_input(t_table *table, char **av);
 void	error_exit(char *error_msg, t_table *table);
 
 /*monitor.c*/
-void	*monitor_sim(void * data);
+void	*monitor_sim(void *data);
 
 /*more_utils.c*/
 bool	simulation_finished(t_table *table);
+void	print_no_tm(t_philo *philo, char *msg);
 
 /*philo_action.c*/
 void	eat(t_philo *philo, t_table *tabel);

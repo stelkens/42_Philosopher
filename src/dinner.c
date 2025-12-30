@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 15:21:21 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/30 12:48:32 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/30 13:36:17 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void	start_dinner(t_table *table)
 		philo = &table->philo[i];
 		handle_thread(&philo->thread_id, NULL, NULL, JOIN);
 	}
-	set_bool(true, &table->end_sim, &table->table_mx, table);
-	safe_print(philo, "everyone is full", -1);
 	handle_thread(&table->monitor, NULL, NULL, JOIN);
 }
 

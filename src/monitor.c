@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 11:01:18 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/30 12:57:09 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/30 13:35:10 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	*monitor_sim(void *data)
 				set_bool(true, &table->end_sim, &table->table_mx, table);
 			else if (get_long(&table->all_full, &table->table_mx, table) == table->num_phil)
 			{
-				safe_print(philo, "everyone is full", -1);
+				print_no_tm(philo, "everyone is full");
 				set_bool(true, &table->end_sim, &table->table_mx, table);
 			}
 		}
