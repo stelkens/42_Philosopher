@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 17:44:59 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/24 14:32:44 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/30 13:10:16 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,14 @@ void	eat(t_philo *philo, t_table *table)
 
 	if (philo->full || simulation_finished(table))
 		return ;
-	handle_mutex(&philo->right_fork->fork, LOCK, table);
+	handle_mutex(&philo->right_fork->fork_mx, LOCK, table);
+	if (philo->full || simulation_finished(table))
+	{
+		handle_mutex(&philo->right_fork->fork_mx, UNLOCK, table);
+		return ;
+	}
 	safe_print(philo, "has taken a fork", philo->right_fork->fork_id);
-	handle_mutex(&philo->left_fork->fork, LOCK, table);
+	handle_mutex(&philo->left_fork->fork_mx, LOCK, table);
 	safe_print(philo, "has taken a fork", philo->left_fork->fork_id);
 	start_eat = ft_gettime(MILLI_SEC);
 	safe_print(philo, "is eating", -1);
@@ -30,10 +35,10 @@ void	eat(t_philo *philo, t_table *table)
 	if (table->limit_meals > 0 && philo->meals_eaten >= table->limit_meals)
 	{
 		set_bool(true, &philo->full, &philo->philo_mutex, table);
-		increment_loog(&table->all_full, &table->read_table, table);
+		increment_loog(&table->all_full, &table->table_mx, table);
 	}
-	handle_mutex(&philo->left_fork->fork, UNLOCK, table);
-	handle_mutex(&philo->right_fork->fork, UNLOCK, table);
+	handle_mutex(&philo->left_fork->fork_mx, UNLOCK, table);
+	handle_mutex(&philo->right_fork->fork_mx, UNLOCK, table);
 }
 
 void	sleeping(t_philo *philo, t_table *table)

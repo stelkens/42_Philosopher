@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 14:17:12 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/24 14:25:35 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/30 13:22:23 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,33 +24,32 @@ void	error_exit(char *error_msg, t_table *table)
 		handle_mutex(&table->print_mutex, LOCK, table);
 		printf("Error: %s\n", error_msg);
 		handle_mutex(&table->print_mutex, UNLOCK, table);
-		set_bool(true, &table->end_simulation, &table->read_table, table);
+		set_bool(true, &table->end_sim, &table->table_mx, table);
 		table->error = 1;
 	}
-	
 }
 
 static void	clean_up(t_table *table)
 {
-	int	i;
+	int		i;
 	t_philo	*philo;
-	t_fork	*fork;
+	t_fork	*fork_p;
 
 	i = -1;
-	while (++i < table->num_philos)
+	while (++i < table->num_phil)
 	{
-		philo = table->philo +i;
+		philo = &table->philo[i];
 		handle_mutex(&philo->philo_mutex, DESTROY, table);
-		free(philo);
 	}
 	i = -1;
-	while (++i < table->num_philos)
+	while (++i < table->num_phil)
 	{
-		fork = table->forks + i;
-		handle_mutex(&fork->fork, DESTROY, table);
-		free(fork);
+		fork_p = &table->forks[i];
+		handle_mutex(&fork_p->fork_mx, DESTROY, table);
 	}
-	handle_mutex(&table->read_table, DESTROY, table);
+	free(table->philo);
+	free(table->forks);
+	handle_mutex(&table->table_mx, DESTROY, table);
 	handle_mutex(&table->print_mutex, DESTROY, table);
 	if (table->error)
 		exit(EXIT_FAILURE);

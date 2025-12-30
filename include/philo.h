@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 14:22:58 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/24 14:24:40 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/30 13:10:16 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef enum e_time
 
 typedef struct s_fork
 {
-	pthread_mutex_t	fork;
+	pthread_mutex_t	fork_mx;
 	int				fork_id;
 }				t_fork;
 
@@ -69,7 +69,7 @@ typedef struct s_philo
 philo threads are made*/
 typedef struct s_table
 {
-	long			num_philos;
+	long			num_phil;
 	long			to_die;
 	long			to_eat;
 	long			to_sleep;
@@ -78,11 +78,11 @@ typedef struct s_table
 	long			start_time;
 	long			all_full;
 	long			running_threads;
-	bool			end_simulation;
+	bool			end_sim;
 	bool			philos_ready;
 	int				error;
 	pthread_t		monitor;
-	pthread_mutex_t	read_table;
+	pthread_mutex_t	table_mx;
 	pthread_mutex_t	print_mutex;
 	t_philo			*philo;
 	t_fork			*forks;

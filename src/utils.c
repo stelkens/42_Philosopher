@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 16:39:49 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/24 14:27:05 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/30 12:48:22 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	wait_all_philos(t_table *table)
 {
 	while (1)
 	{
-		if (get_bool(&table->philos_ready, &table->read_table, table))
+		if (get_bool(&table->philos_ready, &table->table_mx, table))
 			break ;
 	}
 }

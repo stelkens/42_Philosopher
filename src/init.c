@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 16:32:20 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/24 13:21:45 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/30 13:10:16 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	parse_input(t_table *table, char **av)
 {
 	invalid_input(av);
 	memset(table, 0, sizeof(t_table));
-	table->num_philos = ft_atol(av[1]);
+	table->num_phil = ft_atol(av[1]);
 	table->to_die = ft_atol(av[2]);
 	table->to_eat = ft_atol(av[3]);
 	table->to_sleep = ft_atol(av[4]);
@@ -68,13 +68,13 @@ static void	set_fork(t_philo *philo, t_fork *forks, int i)
 	int		j;
 	long	num_philo;
 
-	num_philo = philo->table->num_philos;
+	num_philo = philo->table->num_phil;
 	if (i == 0)
 	{
 		j = -1;
 		while (++j < num_philo)
 		{
-			handle_mutex(&forks[j].fork, INIT, philo->table);
+			handle_mutex(&forks[j].fork_mx, INIT, philo->table);
 			forks[j].fork_id = j;
 		}
 	}
@@ -92,15 +92,15 @@ void	set_table(t_table *table)
 
 	i = -1;
 	// table->dead_philo = 0;
-	// table->end_simulation = false;
-	table->philo = handle_malloc(table->num_philos * sizeof(t_philo), table);
-	table->forks = handle_malloc(table->num_philos * sizeof(t_fork), table);
+	// table->end_sim = false;
+	table->philo = handle_malloc(table->num_phil * sizeof(t_philo), table);
+	table->forks = handle_malloc(table->num_phil * sizeof(t_fork), table);
 	// table->philos_ready = false;
 	// table->running_threads = 0;
 	// table->all_full = 0;
-	handle_mutex(&table->read_table, INIT, table);
+	handle_mutex(&table->table_mx, INIT, table);
 	handle_mutex(&table->print_mutex, INIT, table);
-	while (++i < table->num_philos)
+	while (++i < table->num_phil)
 	{
 		philo = &table->philo[i];
 		philo->id = i + 1;

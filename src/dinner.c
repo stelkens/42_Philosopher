@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 15:21:21 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/24 14:35:28 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/30 12:48:32 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,22 @@ void	start_dinner(t_table *table)
 	t_philo	*philo;
 
 	i = -1;
-	while (++i < table->num_philos)
+	while (++i < table->num_phil)
 	{
 		philo = &table->philo[i];
 		handle_thread(&philo->thread_id, dinner_simulation, (void *)philo, CREATE);
 	}
 	handle_thread(&table->monitor, monitor_sim, (void *)table, CREATE);
 	table->start_time = ft_gettime(MILLI_SEC);
-	set_bool(true, &table->philos_ready, &table->read_table, table);
+	set_bool(true, &table->philos_ready, &table->table_mx, table);
 	i = -1;
-	while (++i < table->num_philos)
+	while (++i < table->num_phil)
 	{
 		philo = &table->philo[i];
 		handle_thread(&philo->thread_id, NULL, NULL, JOIN);
 	}
-	//set_bool(true, &table->end_simulation, &table->read_table); brauch ich das?
+	set_bool(true, &table->end_sim, &table->table_mx, table);
+	safe_print(philo, "everyone is full", -1);
 	handle_thread(&table->monitor, NULL, NULL, JOIN);
 }
 
@@ -51,8 +52,8 @@ void	*dinner_simulation(void *data)
 	philo = (t_philo *)data;
 	wait_all_philos(philo->table);
 	set_long(ft_gettime(MILLI_SEC), &philo->last_meal, &philo->philo_mutex, philo->table);
-	increment_loog(&philo->table->running_threads, &philo->table->read_table, philo->table);
-	if (philo->table->num_philos == 1)
+	increment_loog(&philo->table->running_threads, &philo->table->table_mx, philo->table);
+	if (philo->table->num_phil == 1)
 		dinner_for_one(philo);
 	if (philo->id % 2 < 1 && !simulation_finished(philo->table))
 		think(philo, philo->table->to_eat / 2);
