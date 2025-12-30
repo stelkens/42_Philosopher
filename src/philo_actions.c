@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 17:44:59 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/30 13:10:16 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/30 13:53:02 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,17 @@ void	eat(t_philo *philo, t_table *table)
 		handle_mutex(&philo->right_fork->fork_mx, UNLOCK, table);
 		return ;
 	}
-	safe_print(philo, "has taken a fork", philo->right_fork->fork_id);
+	safe_print(philo, "has taken a fork");
 	handle_mutex(&philo->left_fork->fork_mx, LOCK, table);
-	safe_print(philo, "has taken a fork", philo->left_fork->fork_id);
+	safe_print(philo, "has taken a fork");
 	start_eat = ft_gettime(MILLI_SEC);
-	safe_print(philo, "is eating", -1);
-	set_long(start_eat, &philo->last_meal, &philo->philo_mutex, table);
+	safe_print(philo, "is eating");
+	set_long(start_eat, &philo->last_meal, &philo->philo_mx, table);
 	philo->meals_eaten += 1;
 	better_usleep(table->to_eat - (ft_gettime(MILLI_SEC) - start_eat), table);
 	if (table->limit_meals > 0 && philo->meals_eaten >= table->limit_meals)
 	{
-		set_bool(true, &philo->full, &philo->philo_mutex, table);
+		set_bool(true, &philo->full, &philo->philo_mx, table);
 		increment_loog(&table->all_full, &table->table_mx, table);
 	}
 	handle_mutex(&philo->left_fork->fork_mx, UNLOCK, table);
@@ -45,7 +45,7 @@ void	sleeping(t_philo *philo, t_table *table)
 {
 	if (simulation_finished(table))
 		return ;
-	safe_print(philo, "is sleeping", -1);
+	safe_print(philo, "is sleeping");
 	better_usleep(table->to_sleep, table);
 }
 
@@ -53,7 +53,7 @@ void	think(t_philo *philo, long mill_sec)
 {
 	if (simulation_finished(philo->table))
 		return ;
-	safe_print(philo, "is thinking", -1);
+	safe_print(philo, "is thinking");
 	better_usleep(mill_sec, philo->table);
 }
 

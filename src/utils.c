@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 16:39:49 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/30 13:31:18 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/30 13:42:43 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,12 @@ void	better_usleep(long msec, t_table *table)
 	}
 }
 
-void	safe_print(t_philo *philo, char *msg, int fork_id)
+void	safe_print(t_philo *philo, char *msg)
 {
 	if (simulation_finished(philo->table) || philo->full)
 		return ;
 	handle_mutex(&philo->table->print_mutex, LOCK, philo->table);
-	printf("%ld\t%d\t%s [fork id %d]\n",
-		ft_gettime(MILLI_SEC) - philo->table->start_time, philo->id, msg, fork_id);
+	printf("%ld\t%d\t%s\n",
+		ft_gettime(MILLI_SEC) - philo->table->start_time, philo->id, msg);
 	handle_mutex(&philo->table->print_mutex, UNLOCK, philo->table);
 }

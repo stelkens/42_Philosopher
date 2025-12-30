@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 14:18:48 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/24 13:19:19 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/30 13:46:46 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	handle_thread(pthread_t *thread_id, void *(*foo)(void *),
 			void *data, t_thread type)
 {
 	t_table	*table;
-	
+
 	if (foo == dinner_simulation)
 		table = ((t_philo *)data)->table;
 	else

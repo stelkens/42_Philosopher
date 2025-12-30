@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 14:22:58 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/30 13:35:21 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/30 13:44:56 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_philo
 	long			meals_eaten;
 	bool			full;
 	t_table			*table;
-	pthread_mutex_t	philo_mutex;
+	pthread_mutex_t	philo_mx;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
 	pthread_t		thread_id;
@@ -77,7 +77,7 @@ typedef struct s_table
 	long			dead_philo;
 	long			start_time;
 	long			all_full;
-	long			running_threads;
+	long			running_thrds;
 	bool			end_sim;
 	bool			philos_ready;
 	int				error;
@@ -106,7 +106,7 @@ void	set_table(t_table *table);
 void	wait_all_philos(t_table *table);
 long	ft_gettime(t_time type);
 void	better_usleep(long usec, t_table *table);
-void	safe_print(t_philo *philo, char *msg, int fork_id);
+void	safe_print(t_philo *philo, char *msg);
 
 /*handle_func.c*/
 void	handle_mutex(pthread_mutex_t *mutex, t_mutex type, t_table *table);

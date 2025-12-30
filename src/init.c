@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 16:32:20 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/30 13:10:16 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/30 13:46:58 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,8 @@ void	set_table(t_table *table)
 	t_philo	*philo;
 
 	i = -1;
-	// table->dead_philo = 0;
-	// table->end_sim = false;
 	table->philo = handle_malloc(table->num_phil * sizeof(t_philo), table);
 	table->forks = handle_malloc(table->num_phil * sizeof(t_fork), table);
-	// table->philos_ready = false;
-	// table->running_threads = 0;
-	// table->all_full = 0;
 	handle_mutex(&table->table_mx, INIT, table);
 	handle_mutex(&table->print_mutex, INIT, table);
 	while (++i < table->num_phil)
@@ -107,7 +102,7 @@ void	set_table(t_table *table)
 		philo->meals_eaten = 0;
 		philo->full = false;
 		philo->table = table;
-		handle_mutex(&philo->philo_mutex, INIT, table);
+		handle_mutex(&philo->philo_mx, INIT, table);
 		set_fork(philo, table->forks, i);
 	}
 }

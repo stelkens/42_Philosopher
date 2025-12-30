@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 14:17:12 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/30 13:22:23 by tstelken         ###   ########.fr       */
+/*   Updated: 2025/12/30 13:47:08 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	clean_up(t_table *table)
 	while (++i < table->num_phil)
 	{
 		philo = &table->philo[i];
-		handle_mutex(&philo->philo_mutex, DESTROY, table);
+		handle_mutex(&philo->philo_mx, DESTROY, table);
 	}
 	i = -1;
 	while (++i < table->num_phil)
@@ -65,8 +65,6 @@ int	main(int argc, char **argv)
 	set_table(&table);
 	start_dinner(&table);
 	clean_up(&table);
-	//clean_function:destroy all mutex; free forks and philo
-	//clean_up > unlock all locks (halgrind check)
 	return (0);
 }
 //min 2.07 think verbessern?
