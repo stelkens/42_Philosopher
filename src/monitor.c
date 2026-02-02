@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 11:01:18 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/30 19:36:45 by tstelken         ###   ########.fr       */
+/*   Updated: 2026/02/02 13:01:18 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ static void	start_monitor(t_table *table)
 	}
 }
 
+/*if philo is not full and philo is not eating at the moment,
+checks if time since last meal is larger then time-to-die.
+Prints a dead notification.*/
 static bool	philo_died(t_philo *philo)
 {
 	long	no_food;
@@ -37,7 +40,8 @@ static bool	philo_died(t_philo *philo)
 	if (no_food > to_die && !philo->eating)
 	{
 		handle_mutex(&philo->table->print_mutex, LOCK, philo->table);
-		printf("%ld\t%d\t%s\n", ft_gettime(MILLI_SEC) - philo->table->start_time,
+		printf("%ld\t%d\t%s\n",
+			ft_gettime(MILLI_SEC) - philo->table->start_time,
 			philo->id, "died");
 		set_bool(true, &philo->table->end_sim,
 			&philo->table->table_mx, philo->table);
@@ -50,6 +54,8 @@ static bool	philo_died(t_philo *philo)
 	return (false);
 }
 
+/*monitor checks if a philo is dead and if everyone is full.
+Stops the simulation if either is true*/
 void	*monitor_sim(void *data)
 {
 	t_table	*table;

@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 15:21:21 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/30 18:33:11 by tstelken         ###   ########.fr       */
+/*   Updated: 2026/02/02 12:43:35 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ void	*dinner_simulation(void *data)
 	increment_loog(&table->running_thrds, &table->table_mx, table);
 	if (table->num_phil == 1)
 		dinner_for_one(philo);
-	if (philo->id % 2 < 1 && !simulation_finished(table))
+	if (philo->id % 2 == 0 && !simulation_finished(table))
 		think(philo, table->to_eat / 2);
-	while (!simulation_finished(table))
+	while (!simulation_finished(table) && !philo->full)
 	{
+		eat(philo, table);
 		if (philo->full)
 			return (NULL);
-		eat(philo, table);
 		sleeping(philo, table);
 		think(philo, 1);
 	}

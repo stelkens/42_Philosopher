@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 16:32:20 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/30 19:22:58 by tstelken         ###   ########.fr       */
+/*   Updated: 2026/02/02 12:46:08 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	parse_input(t_table *table, char **av)
 	}
 	else
 		table->limit_meals = -1;
-	if (table->limit_meals == 0)
+	if (table->limit_meals == 0 || table->num_phil == 0)
 		exit(EXIT_SUCCESS);
 }
 
@@ -86,16 +86,8 @@ static void	set_fork(t_philo *philo, t_fork *forks, int i)
 		philo->right_fork = &forks[i];
 	else
 	{
-		if (philo->id % 2 == 0)
-		{
-			philo->right_fork = &forks[i];
-			philo->left_fork = &forks[(i + 1) % num_philo];
-		}
-		else
-		{
-			philo->right_fork = &forks[(i + 1) % num_philo];
-			philo->left_fork = &forks[i];
-		}
+		philo->right_fork = &forks[i];
+		philo->left_fork = &forks[(i + 1) % num_philo];
 	}
 }
 

@@ -6,12 +6,18 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 17:44:59 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/30 19:42:35 by tstelken         ###   ########.fr       */
+/*   Updated: 2026/02/02 13:09:44 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/*if philo is not full and the simultation did't finshed,
+philo takes right and left fork, when mutex is unlocked, "eats"
+(usleep for the amound of time-to-eat). Each philo counts how
+many times their where eating. If there is a limit of meals,
+they note if they are full, and increment the counter for
+how many philos are full*/
 void	eat(t_philo *philo, t_table *table)
 {
 	long	start_eat;
@@ -34,8 +40,8 @@ void	eat(t_philo *philo, t_table *table)
 		set_bool(true, &philo->full, &philo->philo_mx, table);
 		increment_loog(&table->all_full, &table->table_mx, table);
 	}
-	handle_mutex(&philo->left_fork->fork_mx, UNLOCK, table);
 	handle_mutex(&philo->right_fork->fork_mx, UNLOCK, table);
+	handle_mutex(&philo->left_fork->fork_mx, UNLOCK, table);
 }
 
 void	sleeping(t_philo *philo, t_table *table)
