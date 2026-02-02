@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 16:39:49 by tstelken          #+#    #+#             */
-/*   Updated: 2026/02/02 11:16:15 by tstelken         ###   ########.fr       */
+/*   Updated: 2026/02/02 13:14:32 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,29 +65,6 @@ long	ft_gettime(t_time type)
 }
 
 /*more precised usleep function*/
-// void	better_usleep(long msec, t_table *table)
-// {
-// 	long	start;
-// 	long	tm_past;
-// 	long	remaining;
-
-// 	start = ft_gettime(MILLI_SEC);
-// 	while (ft_gettime(MILLI_SEC) - start < msec && !simulation_finished(table))
-// 	{
-// 		tm_past = ft_gettime(MILLI_SEC) - start;
-// 		remaining = msec - tm_past;
-// 		if (ft_gettime(MILLI_SEC) - start < remaining && remaining > 1000
-// 			&& !simulation_finished(table))
-// 			usleep(remaining / 2);
-// 		else
-// 		{
-// 			while (1 && !simulation_finished(table))
-// 				if (ft_gettime(MILLI_SEC) - start == msec)
-// 					return ;
-// 		}
-// 	}
-// }
-
 void	better_usleep(long msec, t_table *table)
 {
 	long	start;
@@ -98,9 +75,9 @@ void	better_usleep(long msec, t_table *table)
 	while (!simulation_finished(table))
 	{
 		now = ft_gettime(MILLI_SEC);
-		remaining = msec - (now- start);
+		remaining = msec - (now - start);
 		if (remaining <= 0)
-			break;
+			break ;
 		if (remaining > 1000 && !simulation_finished(table))
 			usleep(remaining / 2);
 		else
