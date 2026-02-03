@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 17:44:59 by tstelken          #+#    #+#             */
-/*   Updated: 2026/02/02 13:09:44 by tstelken         ###   ########.fr       */
+/*   Updated: 2026/02/03 11:26:10 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,3 @@ void	think(t_philo *philo, long mill_sec)
 	safe_print(philo, "is thinking");
 	better_usleep(mill_sec, philo->table);
 }
-

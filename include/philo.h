@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 14:22:58 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/30 19:22:30 by tstelken         ###   ########.fr       */
+/*   Updated: 2026/02/03 11:25:31 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,11 @@ void	*dinner_simulation(void *data);
 
 /*getter_setter.c*/
 long	get_long(long *src, pthread_mutex_t *mutex, t_table *table);
-void	set_long(long value, long *dest, pthread_mutex_t *mutex, t_table *table);
+void	set_long(long value, long *dest,
+			pthread_mutex_t *mutex, t_table *table);
 bool	get_bool(bool *src, pthread_mutex_t *mutex, t_table *table);
-void	set_bool(bool value, bool *dest, pthread_mutex_t *mutex, t_table *table);
+void	set_bool(bool value, bool *dest,
+			pthread_mutex_t *mutex, t_table *table);
 void	increment_loog(long *dest, pthread_mutex_t *mutex, t_table *table);
 
 /*utils.c*/

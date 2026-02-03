@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 16:32:20 by tstelken          #+#    #+#             */
-/*   Updated: 2026/02/02 12:46:08 by tstelken         ###   ########.fr       */
+/*   Updated: 2026/02/03 11:25:51 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ static void	set_fork(t_philo *philo, t_fork *forks, int i)
 	long	num_philo;
 
 	num_philo = philo->table->num_phil;
-
 	if (num_philo == 1)
 		philo->right_fork = &forks[i];
 	else
