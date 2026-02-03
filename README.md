@@ -30,11 +30,8 @@ Example:
 
 ## Resources
 
-* Linux manual pages (`pthread_*`, `gettimeofday`, `usleep`)
+* Linux manual pages (`pthread`, `gettimeofday`, `usleep`)
 * Dean Ruina: "The Dining Philosophers Problem" (Medium)
 * Jamshidbek Ergashev: "Philosophers, 42 Schoool Project" (YouTube)
 * Oceano: "The dinig Philosophers in C: threads, race conditions and deadlocks" (YouTube)
-
-### AI Usage
-
-AI tools were used for debugging and understanding concurrency issues. All implementation and final decisions were made by the author.
+* AI tools were used for debugging and understanding concurrency issues. All implementation and final decisions were made by the author.
