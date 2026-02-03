@@ -6,7 +6,7 @@
 /*   By: tstelken <tstelken@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 14:17:12 by tstelken          #+#    #+#             */
-/*   Updated: 2025/12/30 19:43:38 by tstelken         ###   ########.fr       */
+/*   Updated: 2026/02/03 11:37:00 by tstelken         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,3 @@ int	main(int argc, char **argv)
 	clean_up(&table);
 	return (0);
 }
-/*bugs
-- bei vielen philos deadlock
-- */
